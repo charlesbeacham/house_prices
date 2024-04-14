@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
+from joblib import load
 
+# Read in necessary data files
+X = pd.read_pickle("./X.pkl")
+y = pd.read_pickle("./y.pkl")
+features_only = load("./features_only.joblib")
+numerical_featuers_PCA = load("./numerical_features_PCA.joblib")
+combined_features = load("./combined_features.joblib")
 
 st.title("Feature Selection and Regularization (L1/L2)")
 st.subheader(
@@ -37,3 +44,4 @@ match model:
 
 st.markdown(desc)
 
+X

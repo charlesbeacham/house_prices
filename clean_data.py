@@ -168,7 +168,7 @@ numerical_features_PCA = make_pipeline(
 # Case for the original featuers + all numeric/ordinal PCA transformed features
 combined_features = make_union(features_only, numerical_features_PCA)
 
-dump(features_only,"features_only.joblib")
-dump(numerical_features_PCA, "numerical_features_PCA.joblib")
-dump(combined_features, "combined_features.joblib")
+dump(features_only,"./features_only.joblib")
+dump(numerical_features_PCA, "./numerical_features_PCA.joblib")
+dump(combined_features, "./combined_features.joblib")
 print("Pipeline files written to disk.")
