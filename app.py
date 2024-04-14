@@ -82,7 +82,7 @@ def main():
             desc = """Add more!"""
 
     st.markdown(desc)
-    classifier_tests = [
+    regression_tests = [
         LinearRegression(),
         make_pipeline(SelectKBest(f_regression, k=3), LinearRegression()),
         make_pipeline(SelectKBest(f_regression, k=10), LinearRegression()),
@@ -96,7 +96,7 @@ def main():
     ]
 
     with st.spinner("Fitting models..."):
-        results = iterate_over_models(classifier_tests, names, pipes, pipe_names, X_train, y_train, myscore)
+        results = iterate_over_models(regression_tests, names, pipes, pipe_names, X_train, y_train, myscore)
         fig = plot_results(results, names, pipe_names)
         st.pyplot(fig)
     st.success("Done!")
