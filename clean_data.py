@@ -30,6 +30,7 @@ X = df.drop(columns=["SalePrice", "Id"]).copy()
 # save the X and y matrices to a pickle file.
 y.to_pickle("./y.pkl")
 X.to_pickle("./X.pkl")
+print("X and y matrix files written to disk.")
 
 # Create the pipeline objects to be used.
 numeric_features = [
@@ -170,3 +171,4 @@ combined_features = make_union(features_only, numerical_features_PCA)
 dump(features_only,"features_only.joblib")
 dump(numerical_features_PCA, "numerical_features_PCA.joblib")
 dump(combined_features, "combined_features.joblib")
+print("Pipeline files written to disk.")
