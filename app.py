@@ -133,19 +133,44 @@ def main():
                 f"LR - {k2} Best (k2)",
                 f"LR - {k3} Best (k3)",
             ]
+            my_regression_tests = [
+                LinearRegression(),
+                make_pipeline(SelectKBest(f_regression, k=3), LinearRegression()),
+                make_pipeline(SelectKBest(f_regression, k=10), LinearRegression()),
+                make_pipeline(SelectKBest(f_regression, k=20), LinearRegression()),
+            ]
+            my_names = [
+                "Baseline Regression",
+                f"LR - {3} Best (k1)",
+                f"LR - {10} Best (k2)",
+                f"LR - {20} Best (k3)",
+            ]
+
             
 
-    st.text("Click button below to run model with above parameters.")
+    st.markdown("Click button below to run model with above parameters.")
     if st.button("Run model"):
-        with st.spinner("Fitting models..."):
+        with st.spinner("Fitting your models..."):
             results = iterate_over_models(
                 regression_tests, names, pipes, pipe_names, X_train, y_train, myscore
             )
-            st.text(f"Your model with the above feature selection/regularization parameters")
+            st.markdown(f"Your model with the above feature selection/regularization parameters")
             fig = plot_results(results, names, pipe_names)
             st.pyplot(fig)
+        
+        # below are the models I ran
+        st.markdown(f"Here is the chart for the {model} model using the feature selection/normalization parameters that I chose.")
+        with st.spinner("Fitting my models..."):
+            my_results = iterate_over_models(
+                my_regression_tests, my_names, pipes, pipe_names, X_train, y_train, myscore
+            )
+            fig2 = plot_results(my_results, my_names, pipe_names)
+            st.pyplot(fig2)
         st.success("Done!")
 
+
+        st.markdown("""As can be seen by the above, in almost all cases the model using the combined pipeline (i.e. the case with all original features + the PCA transformed numerical features) along
+                    with some form of feature selection or normalization has a better overall CV RMSE score along with a smaller standard deviation.""")
 
 if __name__ == "__main__":
     main()
