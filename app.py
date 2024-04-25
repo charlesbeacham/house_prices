@@ -145,8 +145,126 @@ def main():
                 f"LR - {10} Best (k2)",
                 f"LR - {20} Best (k3)",
             ]
+        case "Lasso":
+            display_text = (
+                "Choose an alpha value to apply to the Lasso regression."
+            )
+            a1 = st.number_input(
+                f"{display_text} (alpha1)",
+                value=1.0,
+                step=0.01,
+                min_value=0.0,
+            )
 
+            a2 = st.number_input(
+                f"{display_text} (alpha2)",
+                value=0.1,
+                step=0.01,
+                min_value=0.0,
+            )
             
+            a3 = st.number_input(
+                f"{display_text} (alpha3)",
+                value=0.01,
+                step=0.01,
+                min_value=0.0,
+            )
+            regression_tests = [
+                LinearRegression(),
+                Lasso(alpha=a1),
+                Lasso(alpha=a2),
+                Lasso(alpha=a3),
+            ]
+            names = [
+                "Baseline Regression",
+                f"Lasso alpha={a1}",
+                f"Lasso alpha={a2}",
+                f"Lasso alpha={a3}",
+            ]
+            my_regression_tests = [
+                LinearRegression(),
+                Lasso(alpha=1.0),
+                Lasso(alpha=0.1),
+                Lasso(alpha=0.01),
+            ]
+            my_names = [
+                "Baseline Regression",
+                "Lasso alpha=1.0",
+                "Lasso alpha=0.1",
+                "Lasso alpha=0.01",
+            ]
+        case "SGDRegressor":
+            display_text_1 = ("Choose an alpha value")
+            display_text_2 = ("Choose a penalty type (L1 or L2)")
+            col1, col2 = st.columns(2)
+
+            with col1:
+                a1 = st.number_input(
+                    f"{display_text_1} (a1)",
+                    value=1.0,
+                    step=0.01,
+                    min_value=0.0,
+                )
+
+                a2 = st.number_input(
+                    f"{display_text_1} (a2)",
+                    value=0.1,
+                    step=0.01,
+                    min_value=0.0,
+                )
+                
+                a3 = st.number_input(
+                    f"{display_text_1} (a3)",
+                    value=0.01,
+                    step=0.01,
+                    min_value=0.0,
+                )
+
+            with col2:
+                penalty_1 = st.selectbox(
+                    display_text_2,
+                    ("L1", "L2"),
+                    key="penalty1",
+                )
+
+                penalty_2 = st.selectbox(
+                    display_text_2,
+                    ("L1", "L2"),
+                    key="penalty2",
+                )
+
+                penalty_3 = st.selectbox(
+                    display_text_2,
+                    ("L1", "L2"),
+                    key="penalty3",
+                )
+
+                regression_tests = [
+                    SGDRegressor(penalty=None, random_state=41),
+                    SGDRegressor(penalty=penalty_1.lower(), alpha=a1, random_state=41),
+                    SGDRegressor(penalty=penalty_2.lower(), alpha=a2, random_state=41),
+                    SGDRegressor(penalty=penalty_3.lower(), alpha=a3, random_state=41),
+                ]
+                names = [
+                    "Baseline SGDRegressor",
+                    f"SGD alpha={a1} {penalty_1}",
+                    f"SGD alpha={a2} {penalty_2}",
+                    f"SGD alpha={a3} {penalty_3}",
+                ]
+                my_regression_tests = [
+                    SGDRegressor(penalty=None, random_state=41),
+                    SGDRegressor(penalty='l1', alpha=1.0, random_state=41),
+                    SGDRegressor(penalty='l2', alpha=1.0, random_state=41),
+                    SGDRegressor(penalty='l2', alpha=0.1, random_state=41),
+                ]
+                my_names = [
+                    "Baseline SGDRegressor",
+                    "SGD alpha=1.0 L1",
+                    "SGD alpha=1.0 L2",
+                    "SGD alpha=0.1 L2",
+                ]
+
+
 
     st.markdown("Click button below to run model with above parameters.")
     if st.button("Run model"):
