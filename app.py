@@ -55,7 +55,7 @@ def main():
     pipes = [features_only, numerical_features_PCA, combined_features]
     pipe_names = ["features_only", "numeric_PCA", "combined"]
 
-    #define the scorer that will be used to score the models.
+    # define the scorer that will be used to score the models.
     myscore = make_scorer(RMSE_log)
 
     st.title("Feature Selection and Regularization (L1/L2)")
@@ -76,7 +76,7 @@ def main():
     )
     model = st.radio(
         "Select the regression model to test",
-        ["Simple Linear Regression", "Lasso", "Ridge", "SGDRegressor", "ElasticNet"],
+        ["Simple Linear Regression", "Lasso", "SGDRegressor"],
     )
 
     st.text(f"You chose {model}.")
@@ -88,14 +88,26 @@ def main():
             While there is no built in feature seleciton with this model.  We can apply
             feature selection using sklearn's `SelectKBest`."""
             # more conditions here
-        case _:
-            desc = """Add more!"""
+        case "Lasso":
+            desc = """ Lasso Regression uses a term (alpha) to control the regularization strength.  
+            The higher the value the more terms could be dropped from the model.  Essentially L1 regularization
+              takes the absolute values of the coefficients and adds them to the error.  The algorithm
+                will remove features from the model if the penalty for removing is small.  It does this 
+                  by setting the features coefficient to zero. """
+        case "SGDRegressor":
+            desc = """SGD (Stochastic Gradient Descent) Regression is an iterative model that uses a learning rate (alpha) 
+            to determine the strength of the regularization (several options for regularization including L1 and L2).  The loss
+            value is calculated at each iteration and the model coefficients are updated so that the model takes a "step" in the 
+            direction towards a model with lower overall error.  This step is calculated using the partial derivatives of the coefficicent 
+            terms with respect to the error.  The model keeps iterating until a stopping condition is met."""
 
     st.markdown(desc)
     st.divider()
-    st.markdown("""Fill out the parameters below and then run your model.  
+    st.markdown(
+        """Fill out the parameters below and then run your model.  
                 The selections you make will define the feature selection or regularization parameters.
-                See how your inputs compare to what I used!""")
+                See how your inputs compare to what I used!"""
+    )
 
     # create dynamic input
     match model:
@@ -146,9 +158,7 @@ def main():
                 f"LR - {20} Best (k3)",
             ]
         case "Lasso":
-            display_text = (
-                "Choose an alpha value to apply to the Lasso regression."
-            )
+            display_text = "Choose an alpha value to apply to the Lasso regression."
             a1 = st.number_input(
                 f"{display_text} (alpha1)",
                 value=1.0,
@@ -162,7 +172,7 @@ def main():
                 step=0.01,
                 min_value=0.0,
             )
-            
+
             a3 = st.number_input(
                 f"{display_text} (alpha3)",
                 value=0.01,
@@ -194,8 +204,8 @@ def main():
                 "Lasso alpha=0.01",
             ]
         case "SGDRegressor":
-            display_text_1 = ("Choose an alpha value")
-            display_text_2 = ("Choose a penalty type (L1 or L2)")
+            display_text_1 = "Choose an alpha value"
+            display_text_2 = "Choose a penalty type (L1 or L2)"
             col1, col2 = st.columns(2)
 
             with col1:
@@ -212,7 +222,7 @@ def main():
                     step=0.01,
                     min_value=0.0,
                 )
-                
+
                 a3 = st.number_input(
                     f"{display_text_1} (a3)",
                     value=0.01,
@@ -253,9 +263,9 @@ def main():
                 ]
                 my_regression_tests = [
                     SGDRegressor(penalty=None, random_state=41),
-                    SGDRegressor(penalty='l1', alpha=1.0, random_state=41),
-                    SGDRegressor(penalty='l2', alpha=1.0, random_state=41),
-                    SGDRegressor(penalty='l2', alpha=0.1, random_state=41),
+                    SGDRegressor(penalty="l1", alpha=1.0, random_state=41),
+                    SGDRegressor(penalty="l2", alpha=1.0, random_state=41),
+                    SGDRegressor(penalty="l2", alpha=0.1, random_state=41),
                 ]
                 my_names = [
                     "Baseline SGDRegressor",
@@ -264,31 +274,41 @@ def main():
                     "SGD alpha=0.1 L2",
                 ]
 
-
-
     st.markdown("Click button below to run model with above parameters.")
     if st.button("Run model"):
         with st.spinner("Fitting your models..."):
             results = iterate_over_models(
                 regression_tests, names, pipes, pipe_names, X_train, y_train, myscore
             )
-            st.markdown(f"Your model with the above feature selection/regularization parameters")
+            st.markdown(
+                f"Your model with the above feature selection/regularization parameters"
+            )
             fig = plot_results(results, names, pipe_names)
             st.pyplot(fig)
-        
+
         # below are the models I ran
-        st.markdown(f"Here is the chart for the {model} model using the feature selection/normalization parameters that I chose.")
+        st.markdown(
+            f"Here is the chart for the {model} model using the feature selection/normalization parameters that I chose."
+        )
         with st.spinner("Fitting my models..."):
             my_results = iterate_over_models(
-                my_regression_tests, my_names, pipes, pipe_names, X_train, y_train, myscore
+                my_regression_tests,
+                my_names,
+                pipes,
+                pipe_names,
+                X_train,
+                y_train,
+                myscore,
             )
             fig2 = plot_results(my_results, my_names, pipe_names)
             st.pyplot(fig2)
         st.success("Done!")
 
+        st.markdown(
+            """As can be seen by the above, in almost all cases the model using the combined pipeline (i.e. the case with all original features + the PCA transformed numerical features) along
+                    with some form of feature selection or normalization has a better overall CV RMSE score along with a smaller standard deviation."""
+        )
 
-        st.markdown("""As can be seen by the above, in almost all cases the model using the combined pipeline (i.e. the case with all original features + the PCA transformed numerical features) along
-                    with some form of feature selection or normalization has a better overall CV RMSE score along with a smaller standard deviation.""")
 
 if __name__ == "__main__":
     main()
