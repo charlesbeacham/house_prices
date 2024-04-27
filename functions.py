@@ -207,3 +207,5 @@ def plot_results(results, names, pipe_names):
     axs[0].set_xticks(x + width, pipe_names)
     axs[1].set_xticks(x + width, pipe_names)
     axs[0].legend(loc="upper right")
+
+    return fig

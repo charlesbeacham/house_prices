@@ -4,3 +4,4 @@
 stream_test.py
 *.pkl
 *.joblib
+__pycache__/*
