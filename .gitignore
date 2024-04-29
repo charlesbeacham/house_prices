@@ -1,3 +1,8 @@
-*.csv
+sample_submission.csv
+test.csv
 *.txt
 .ipynb_checkpoints/*
+stream_test.py
+*.pkl
+*.joblib
+__pycache__/*
