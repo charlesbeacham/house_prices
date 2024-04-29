@@ -1,0 +1,11 @@
+name: housing
+channels:
+  - defaults
+dependencies:
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-learn
+  - seaborn
+  - streamlit
+prefix: /home/cb/miniconda3/envs/housing
