@@ -1,4 +1,5 @@
 sample_submission.csv
+test.csv
 *.txt
 .ipynb_checkpoints/*
 stream_test.py
