@@ -17,7 +17,7 @@ The focus for this workbook however will be to use the dataset to explore how va
 3. [Project Motivation](#motivation)
 4. [File Descriptions](#files)
 5. [Results](#results)
-6. [Licensing, Authors, and Acknowledgements](#licensing)
+6. [Licensing, Authors, and Acknowledgments](#licensing)
 
 ## Installation <a name="installation"></a>
 
@@ -51,6 +51,6 @@ The motivation for the project originated with my interest in how models can be 
 
 As can be seen in the notebook visualizations, using feature selection or regularization can greatly improve the prediction power of regression models.  This can be attributed to these models being more robust to new unseen data as compared to the models without feature selection or regularization.  When feature selection is not performed the model tends to over-fit and this can lead to poor results in the general case. 
 
-## Licensing, Authors, Acknowledgements<a name="licensing"></a>
+## Licensing, Authors, Acknowledgments<a name="licensing"></a>
 
 Please feel free to use the code here as you like.  I acknowledge Kaggle for their dataset.
