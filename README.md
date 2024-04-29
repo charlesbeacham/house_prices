@@ -21,7 +21,7 @@ The focus for this workbook however will be to use the dataset to explore how va
 
 ## Installation <a name="installation"></a>
 
-See environment.yml for full list of packages used.  The package manager used was conda and coded in Python 3.12.2.  THe main packages used were pandas, sci-kit learn, and streamlit (for the app).
+See environment.yml for full list of packages used.  The package manager used was conda and coded in Python 3.12.2.  The main packages used were pandas, sci-kit learn, and streamlit (for the app).
 
 You can use the environment.yml to create an exact anaconda virtual environment with the command `conda env create -f environment.yml`
 
@@ -42,7 +42,6 @@ The motivation for the project originated with my interest in how models can be 
 
 * housing.ipynb - Main notebook file containing the main analysis and conclusions.
 * train.csv - Training data used for the bulk of the analysis.
-* test.csv - Test set used to evaluate the final model.
 * environment.yml - List of packages used.
 * clean_data.py - File which transforms the training data and creates several files necessary for the app.
 * app.py - Code for the Streamlit app.
