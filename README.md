@@ -31,7 +31,7 @@ In order to run the app follow the below instructions.
 1. Download the files listed in the File Descriptions section below to a folder on your machine.
 2. In a terminal, create a conda environment using the yaml file with `conda env create -f environment.yml`.
 3. Activate the environment with `conda activate housing`.
-4. Run the clean data script with `clean_data.py`.  This step will save a couple of pickle files with the necessary X and y matrix (X.pkl & y.pkl) along with 3 joblib files containing the sklearn pipelines (features_only.joblib, numerical_features_PCA.joblib, combined_features.joblib).
+4. Run the clean data script with ` python clean_data.py`.  This step will save a couple of pickle files with the necessary X and y matrix (X.pkl & y.pkl) along with 3 joblib files containing the sklearn pipelines (features_only.joblib, numerical_features_PCA.joblib, combined_features.joblib).
 5. Activate the app using the command `streamlit run app.py`.
 
 ## Project Motivation<a name="motivation"></a>
